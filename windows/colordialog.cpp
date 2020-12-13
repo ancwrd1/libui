@@ -310,17 +310,7 @@ static void drawGrid(ID2D1RenderTarget *rt, D2D1_RECT_F *fillRect)
 	size.width = 100 / 10;
 	size.height = 100 / 10;
 	// yay more ABI bugs
-#ifdef _MSC_VER
 	pformat = rt->GetPixelFormat();
-#else
-	{
-		typedef D2D1_PIXEL_FORMAT *(__stdcall ID2D1RenderTarget::* GetPixelFormatF)(D2D1_PIXEL_FORMAT *) const;
-		GetPixelFormatF gpf;
-
-		gpf = (GetPixelFormatF) (&(rt->GetPixelFormat));
-		(rt->*gpf)(&pformat);
-	}
-#endif
 	hr = rt->CreateCompatibleRenderTarget(&size, NULL,
 		&pformat, D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
 		&brt);
@@ -1438,7 +1428,7 @@ static const uint8_t data_rcColorDialog[] = {
 	0x24, 0x01, 0xBC, 0x00, 0x2D, 0x00, 0x0E, 0x00,
 	0x02, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x80, 0x00,
 	0x43, 0x00, 0x61, 0x00, 0x6E, 0x00, 0x63, 0x00,
-	0x65, 0x00, 0x6C, 0x00, 0x00, 0x00, 0x00, 0x00, 
+	0x65, 0x00, 0x6C, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 static_assert(ARRAYSIZE(data_rcColorDialog) == 1144, "wrong size for resource rcColorDialog");
 
